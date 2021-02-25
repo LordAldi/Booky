@@ -1,6 +1,6 @@
 using System;
 
-namespace Booky.Models
+namespace Booky.Models.ViewModels   
 {
     public class ErrorViewModel
     {
