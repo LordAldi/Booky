@@ -32,7 +32,8 @@ namespace Booky.Areas.Admin.Controllers
             ProductVM productVM = new ProductVM()
             {
                 Product = new Product(),
-                CategoryList = _unitOfWork.Category.GetAll().Select(i=>new SelectListItem { 
+                CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
+                {
                     Text = i.Name,
                     Value = i.Id.ToString()
                 }),
@@ -40,7 +41,7 @@ namespace Booky.Areas.Admin.Controllers
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
-                }),
+                })
             };
             if (id == null)
             {
@@ -66,33 +67,34 @@ namespace Booky.Areas.Admin.Controllers
                 if (files.Count > 0)
                 {
                     string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, @"images\products\");
-                    var extension = Path.GetExtension(files[0].FileName);
+                    var uploads = Path.Combine(webRootPath, @"images\products");
+                    var extenstion = Path.GetExtension(files[0].FileName);
 
                     if (productVM.Product.ImageUrl != null)
                     {
-                        //this is edit change image, remove old image
+                        //this is an edit and we need to remove old image
                         var imagePath = Path.Combine(webRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
                         if (System.IO.File.Exists(imagePath))
                         {
                             System.IO.File.Delete(imagePath);
                         }
                     }
-                    using(var filesStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    using (var filesStreams = new FileStream(Path.Combine(uploads, fileName + extenstion), FileMode.Create))
                     {
-                        files[0].CopyTo(filesStreams); 
+                        files[0].CopyTo(filesStreams);
                     }
-                    productVM.Product.ImageUrl = @"\images\products\" + fileName + extension;
+                    productVM.Product.ImageUrl = @"\images\products\" + fileName + extenstion;
                 }
                 else
                 {
-                    //this is edit not change image
-                    if(productVM.Product.Id != 0)
+                    //update when they do not change the image
+                    if (productVM.Product.Id != 0)
                     {
                         Product objFromDb = _unitOfWork.Product.Get(productVM.Product.Id);
                         productVM.Product.ImageUrl = objFromDb.ImageUrl;
                     }
                 }
+
 
                 if (productVM.Product.Id == 0)
                 {
@@ -102,10 +104,26 @@ namespace Booky.Areas.Admin.Controllers
                 else
                 {
                     _unitOfWork.Product.Update(productVM.Product);
-
                 }
                 _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                productVM.CoverTypeList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                if (productVM.Product.Id != 0)
+                {
+                    productVM.Product = _unitOfWork.Product.Get(productVM.Product.Id);
+                }
             }
             return View(productVM);
         }
@@ -125,6 +143,12 @@ namespace Booky.Areas.Admin.Controllers
             if (objFromDb == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
+            }
+            string webRootPath = _hostEnvironment.WebRootPath;
+            var imagePath = Path.Combine(webRootPath, objFromDb.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
             }
             _unitOfWork.Product.Remove(objFromDb);
             _unitOfWork.Save();

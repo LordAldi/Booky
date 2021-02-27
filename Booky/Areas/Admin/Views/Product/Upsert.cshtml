@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-8">
                     <input asp-for="Product.Title" class="form-control" />
-                    <span asp-validation-for="Product.Title" class="text-danger" />
+                    <span asp-validation-for="Product.Title" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-8">
                     <input asp-for="Product.ISBN" class="form-control" />
-                    <span asp-validation-for="Product.ISBN" class="text-danger" />
+                    <span asp-validation-for="Product.ISBN" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-8">
                     <input asp-for="Product.Author" class="form-control" />
-                    <span asp-validation-for="Product.Author" class="text-danger" />
+                    <span asp-validation-for="Product.Author" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-8">
                     <input asp-for="Product.ListPrice" class="form-control" />
-                    <span asp-validation-for="Product.ListPrice" class="text-danger" />
+                    <span asp-validation-for="Product.ListPrice" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="col-8">
                     <input asp-for="Product.Price" class="form-control" />
-                    <span asp-validation-for="Product.Price" class="text-danger" />
+                    <span asp-validation-for="Product.Price" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-8">
                     <input asp-for="Product.Price50" class="form-control" />
-                    <span asp-validation-for="Product.Price50" class="text-danger" />
+                    <span asp-validation-for="Product.Price50" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-8">
                     <input asp-for="Product.Price100" class="form-control" />
-                    <span asp-validation-for="Product.Price100" class="text-danger" />
+                    <span asp-validation-for="Product.Price100" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -93,8 +93,9 @@
                     Category
                 </div>
                 <div class="col-8">
-                    @Html.DropDownListFor(m => m.Product.CategoryId, Model.CategoryList, "-Select a Category", new { @class = "form-control" })
-                    <span asp-validation-for="Product.CategoryId" class="text-danger" />
+                    @Html.DropDownListFor(m => m.Product.CategoryId, Model.CategoryList, "-Select a Category",
+                   new { @class = "form-control" })
+                    <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -102,8 +103,9 @@
                     Cover Type
                 </div>
                 <div class="col-8">
-                    @Html.DropDownListFor(m => m.Product.CoverTypeId, Model.CoverTypeList, "-Select a Cover Type", new { @class = "form-control" })
-                    <span asp-validation-for="Product.CoverTypeId" class="text-danger" />
+                    @Html.DropDownListFor(m => m.Product.CoverTypeId, Model.CoverTypeList, "-Select a Cover Type",
+                   new { @class = "form-control" })
+                    <span asp-validation-for="Product.CoverTypeId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -114,7 +116,6 @@
                     <input type="file" name="files" id="uploadBox" multiple class="form-control" />
                 </div>
             </div>
-
             <div class="form-group row">
                 <div class="col-8 offset-4">
                     @if (Model.Product.Id != 0)
@@ -128,39 +129,39 @@
                                 <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Create</button>
                             </div>
                             <div class="col">
-                                <a asp-action="Index" class="btn btn-success form-control">Back to List </a>
+                                <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
                             </div>
                         </div>
                     }
                 </div>
             </div>
         </div>
-        @if(Model.Product.Id != 0)
+        @if (Model.Product.Id != 0)
         {
             <div class="col-3 offset-1 pt-4">
-                <img src="@Model.Product.ImageUrl" width="100%" style="border-radius:5px; border: 1px solid #bbb9b9"/>
+                <img src="@Model.Product.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
             </div>
         }
     </div>
 </form>
 
 @section Scripts{
-
     <partial name="_ValidationScriptsPartial" />
-    <script src="https://cdn.tiny.cloud/1/cn8efqhtnitndlny49bp90q511hxc72oto3xr3wm1abttgnd/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/n94ifuzvl80pchikopiwgz2esrw8n28dwcywvpejlqrregfp/tinymce/5/tinymce.min.js"></script>
+
     <script>
         tinymce.init({
             selector: 'textarea',
-            plugins: "lists",
-            menubar:"file edit format"
+            plugins: 'lists',
+            menubar: 'file edit format'
         });
-
         function validateInput() {
             if (document.getElementById("uploadBox").value == "") {
                 swal("Error", "Please select an image", "error");
                 return false;
             }
             return true;
-        }
+        };
     </script>
+
 }
