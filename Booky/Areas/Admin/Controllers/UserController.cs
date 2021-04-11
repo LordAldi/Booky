@@ -1,13 +1,12 @@
-﻿using Booky.DataAccess.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Booky.DataAccess.Data;
 using Booky.DataAccess.Repository.IRepository;
 using Booky.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Booky.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -19,11 +18,14 @@ namespace Booky.Areas.Admin.Controllers
         {
             _db = db;
         }
+
         public IActionResult Index()
         {
             return View();
         }
-        
+
+
+
         #region API CALLS
 
         [HttpGet]
@@ -38,27 +40,27 @@ namespace Booky.Areas.Admin.Controllers
                 user.Role = roles.FirstOrDefault(u => u.Id == roleId).Name;
                 if (user.Company == null)
                 {
-                    user.Company = new Company
+                    user.Company = new Company()
                     {
                         Name = ""
                     };
                 }
             }
+
             return Json(new { data = userList });
         }
-         
+
         [HttpPost]
         public IActionResult LockUnlock([FromBody] string id)
         {
             var objFromDb = _db.ApplicationUsers.FirstOrDefault(u => u.Id == id);
             if (objFromDb == null)
             {
-                return Json(new { success = false, message="Error while Locking/Unlocking" });
+                return Json(new { success = false, message = "Error while Locking/Unlocking" });
             }
-            if(objFromDb.LockoutEnd!=null && objFromDb.LockoutEnd > DateTime.Now)
+            if (objFromDb.LockoutEnd != null && objFromDb.LockoutEnd > DateTime.Now)
             {
-                //user is curently lock
-
+                //user is currently locked, we will unlock them
                 objFromDb.LockoutEnd = DateTime.Now;
             }
             else
@@ -66,9 +68,9 @@ namespace Booky.Areas.Admin.Controllers
                 objFromDb.LockoutEnd = DateTime.Now.AddYears(1000);
             }
             _db.SaveChanges();
-            return Json(new { success = true, message = "Operation Successfull" });
-
+            return Json(new { success = true, message = "Operation Successful." });
         }
+
         #endregion
     }
 }
