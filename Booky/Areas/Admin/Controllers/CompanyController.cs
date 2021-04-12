@@ -1,5 +1,7 @@
 ﻿using Booky.DataAccess.Repository.IRepository;
 using Booky.Models;
+using Booky.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,8 @@ using System.Threading.Tasks;
 namespace Booky.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin+","+SD.Role_Employee)]
+
     public class CompanyController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

@@ -40,6 +40,24 @@ namespace Booky
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+
+            });
+            services.AddAuthentication().AddFacebook(options=>
+            {
+                options.AppId = "481156293240823";
+                options.AppSecret = "910f9949022c2039fdb6b0f27310ec3d";
+            });
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "633030048380-75j2qka02idfbrrrm1gsgmm0lqb51svn.apps.googleusercontent.com";
+                options.ClientSecret = "0ryjD7Ys0sVtjRDyllqxgHHp";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
