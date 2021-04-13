@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -12,16 +12,20 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "GOOGLE_SECRET": "0ryjD7Ys0sVtjRDyllqxgHHp",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "FB_SECRET": "910f9949022c2039fdb6b0f27310ec3d"
       }
     },
     "Booky": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "GOOGLE_SECRET": "0ryjD7Ys0sVtjRDyllqxgHHp",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "FB_SECRET": "910f9949022c2039fdb6b0f27310ec3d"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }
   }
 }

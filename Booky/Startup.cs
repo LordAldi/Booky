@@ -51,12 +51,12 @@ namespace Booky
             services.AddAuthentication().AddFacebook(options=>
             {
                 options.AppId = "481156293240823";
-                options.AppSecret = "910f9949022c2039fdb6b0f27310ec3d";
+                options.AppSecret = Environment.GetEnvironmentVariable("FB_SECRET");
             });
             services.AddAuthentication().AddGoogle(options =>
             {
                 options.ClientId = "633030048380-75j2qka02idfbrrrm1gsgmm0lqb51svn.apps.googleusercontent.com";
-                options.ClientSecret = "0ryjD7Ys0sVtjRDyllqxgHHp";
+                options.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_SECRET");
             });
         }
 
